@@ -1,4 +1,9 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
 @Controller('sockets')
-export class SocketsController {}
+export class SocketsController {
+    @Get()
+    get() {
+        return 'working1'
+    }
+}

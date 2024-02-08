@@ -1,6 +1,22 @@
 version: '3.8'
 
 services:
+  sockets:
+    build:
+      context: .
+      dockerfile: ./apps/sockets/Dockerfile
+      target: development
+    command: npm run start:dev sockets
+    env_file:
+      - ./apps/sockets/.env
+    depends_on:
+      - db
+    volumes:
+      - .:/src/app
+      - /src/app/node_modules
+    ports:
+      - '3000:3000'
+    
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
@@ -21,4 +37,10 @@ services:
       - POSTGRES_PASSWORD=123451Ra
       - POSTGRES_USER=admin
       - POSTGRES_DB=sockets
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - db-data:/var/lib/postgresql/data
     image: postgres:16-alpine
+
+volumes:
+  db-data:
