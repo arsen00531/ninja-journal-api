@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { SocketsModule } from './../src/sockets.module';
+import { SocketsModule } from '../src/sockets/sockets.module';
 
 describe('SocketsController (e2e)', () => {
   let app: INestApplication;
