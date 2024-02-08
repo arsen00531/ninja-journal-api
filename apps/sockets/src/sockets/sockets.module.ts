@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { SocketsController } from './sockets.controller';
 import { SocketsService } from './sockets.service';
 import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from '@app/common';
+import { GatewayModule } from '../gateway/gateway.module';
 
 @Module({
   imports: [
@@ -10,7 +10,7 @@ import { DatabaseModule } from '@app/common';
       isGlobal: true,
       envFilePath: './apps/sockets/.env'
     }),
-    DatabaseModule
+    GatewayModule
   ],
   controllers: [SocketsController],
   providers: [SocketsService],

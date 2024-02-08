@@ -13,3 +13,12 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin
+  db:
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=123451Ra
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=sockets
+    image: postgres:16-alpine
