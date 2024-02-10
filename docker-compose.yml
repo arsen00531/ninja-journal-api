@@ -1,46 +1,42 @@
 version: '3.8'
 
 services:
-  sockets:
-    build:
-      context: .
-      dockerfile: ./apps/sockets/Dockerfile
-      target: development
-    command: npm run start:dev sockets
-    env_file:
-      - ./apps/sockets/.env
-    depends_on:
-      - db
-    volumes:
-      - .:/src/app
-      - /src/app/node_modules
-    ports:
-      - '3000:3000'
+  # sockets:
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/sockets/Dockerfile
+  #     target: development
+  #   command: npm run start:dev sockets
+  #   env_file:
+  #     - ./apps/sockets/.env
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - .:/src/app
+  #     - /src/app/node_modules
+  #   ports:
+  #     - 3000:3000
     
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
-    hostname: rabbitmq
-    volumes:
-      - /var/lib/rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=admin
+  # rabbitmq:
+  #   image: rabbitmq:3-management
+  #   container_name: rabbitmq
+  #   hostname: rabbitmq
+  #   volumes:
+  #     - /var/lib/rabbitmq
+  #   ports:
+  #     - 5672:5672
+  #     - 15672:15672
+  #   environment:
+  #     - RABBITMQ_DEFAULT_USER=admin
+  #     - RABBITMQ_DEFAULT_PASS=admin
   db:
     container_name: postgres
+    restart: always
     ports:
-      - "5432:5432"
+      - "54321:5432"
     environment:
-      - POSTGRES_PASSWORD=123451Ra
+      - POSTGRES_PASSWORD=admin
       - POSTGRES_USER=admin
       - POSTGRES_DB=sockets
       - PGDATA=/var/lib/postgresql/data/pgdata
-    volumes:
-      - db-data:/var/lib/postgresql/data
     image: postgres:16-alpine
-
-volumes:
-  db-data:
