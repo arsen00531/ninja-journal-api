@@ -34,12 +34,10 @@ services:
     restart: always
     ports:
       - "54321:5432"
-    env_file:
-      - compose.env
     environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=journal
       - PGDATA=/var/lib/postgresql/data/pgdata
     # volumes:
     #   - ./pgdata:/var/lib/postgresql/data
