@@ -1,14 +1,14 @@
-import { CommonConfigModule } from "@app/common";
+import { CommonConfigModule, DatabaseModule } from "@app/common";
 import { Module } from "@nestjs/common";
 import { SocketModule } from './socket/socket.module';
-import { SocketService } from "./socket/socket.service";
 
 @Module({
     imports: [
         CommonConfigModule,
+        DatabaseModule,
         SocketModule,
     ],
-    providers: [SocketService]
+    providers: []
 })
 export class AppModule {
 
