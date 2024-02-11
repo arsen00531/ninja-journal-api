@@ -1,5 +1,9 @@
-import { ConnectedSocket, MessageBody, OnGatewayConnection, SubscribeMessage, WebSocketGateway } from "@nestjs/websockets";
+import { UseFilters, UsePipes, ValidationPipe } from "@nestjs/common";
+import { ConnectedSocket, MessageBody, OnGatewayConnection, SubscribeMessage, WebSocketGateway, WsException } from "@nestjs/websockets";
 import { Socket } from "socket.io";
+import { MessageDto } from "./dto/message.dto";
+import { ValidationError } from "class-validator";
+import { WebsocketExceptionsFilter } from "./filter/ws.filter";
 
 @WebSocketGateway({
     cors: {
@@ -8,14 +12,16 @@ import { Socket } from "socket.io";
 })
 export class SocketService implements OnGatewayConnection {
 
-    @SubscribeMessage('lox')
-    handleEvent(@MessageBody() dto: any, @ConnectedSocket() client: Socket) {
-        console.log(client.id);
-        client.emit('sam_lox', {data: 'sam_lox'})
-    }
-
     handleConnection(@ConnectedSocket() client: Socket) {
         console.log(client.id);
         console.log("Connected");
     }
+
+    @SubscribeMessage('message')
+    @UsePipes(new ValidationPipe())
+    @UseFilters(WebsocketExceptionsFilter)
+    handleEvent(@MessageBody() dto: MessageDto, @ConnectedSocket() client: Socket) {
+        
+    }
+
 }

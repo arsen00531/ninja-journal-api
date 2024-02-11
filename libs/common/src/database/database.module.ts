@@ -1,6 +1,9 @@
 import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { Message } from "./entities/message.entity";
+import { Group } from "./entities/group.entity";
+import { Student } from "./entities/student.entity";
 
 @Module({
     imports: [
@@ -9,7 +12,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
                 type: 'postgres',
                 url: configService.get('TYPEORM_URL'),
                 synchronize: true,
-                entities: []
+                entities: [
+                    Group,
+                    Message,
+                    Student
+                ]
             }),
             inject: [ConfigService]
         })
