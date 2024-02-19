@@ -9,7 +9,7 @@ import * as Joi from "joi";
             validationSchema: Joi.object({
                 TYPEORM_URL: Joi.string().required()
             }),
-            envFilePath: './apps/sockets/.env'
+            envFilePath: ['./.env']
         }),
     ]
 })

@@ -4,6 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Message } from "./entities/message.entity";
 import { Group } from "./entities/group.entity";
 import { Student } from "./entities/student.entity";
+import { User } from "apps/ninja-journal/src/authentification/entities/users.entity";
 
 @Module({
     imports: [
@@ -15,7 +16,8 @@ import { Student } from "./entities/student.entity";
                 entities: [
                     Group,
                     Message,
-                    Student
+                    Student,
+                    User
                 ]
             }),
             inject: [ConfigService]
