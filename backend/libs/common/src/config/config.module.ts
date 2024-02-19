@@ -7,7 +7,8 @@ import * as Joi from "joi";
         ConfigModule.forRoot({
             isGlobal: true,
             validationSchema: Joi.object({
-                TYPEORM_URL: Joi.string().required()
+                TYPEORM_URL: Joi.string().required(),
+                SECRET_KEY: Joi.string().required(),
             }),
             envFilePath: ['./.env']
         }),

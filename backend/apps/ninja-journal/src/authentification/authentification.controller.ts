@@ -1,9 +1,9 @@
-import { Controller, Post, Res } from '@nestjs/common';
-import { FastifyReply } from 'fastify';
+import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthentificationService } from './authentification.service';
 import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 
-@Controller('authentification')
+@Controller('api/user')
 export class AuthentificationController {
 
     constructor(
@@ -11,7 +11,14 @@ export class AuthentificationController {
     ) {}
 
     @Post()
-    registration(@Res() response: FastifyReply, dto: RegisterDto) {
-        this.authentificationService.registration(dto)
+    @UsePipes(new ValidationPipe())
+    registration(@Body() dto: RegisterDto) {
+        return this.authentificationService.registration(dto)
+    }
+
+    @Post('login')
+    @UsePipes(new ValidationPipe())
+    login(@Body() dto: LoginDto) {
+        return this.authentificationService.login(dto)
     }
 }

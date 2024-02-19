@@ -14,7 +14,6 @@ export class AuthentificationService {
     constructor(
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
-        @Inject()
         private readonly configService: ConfigService
     ) {}
 
@@ -23,19 +22,17 @@ export class AuthentificationService {
             email: dto.email
         })
 
-        if (!user) {
-            return new BadRequestException('User exist already')
+        if (!user || !(await compare(dto.password, user.password))) {
+            return new BadRequestException('User exist already or password incorrect')
         }
 
         if (await compare(dto.password, user.password)) {
-            sign({data: dto.email}, this.configService.get('SECRET_KEY'))
+            return sign({data: dto.email}, this.configService.get('SECRET_KEY'))
         }
     }
 
     async registration(dto: RegisterDto) {
-        console.log(this.configService.get('SECRET_KEY'));
-        return 
-        const candidate = await this.userRepository.findBy({
+        const candidate = await this.userRepository.findOneBy({
             email: dto.email
         })
 
@@ -46,7 +43,10 @@ export class AuthentificationService {
 
         this.userRepository.save({
             email: dto.email,
+            name: dto.name,
             password: hashedPassword
         })
+
+        return sign({data: dto.email}, this.configService.get('SECRET_KEY'))
     }
 }
